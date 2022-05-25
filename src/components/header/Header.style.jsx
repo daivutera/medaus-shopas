@@ -21,8 +21,8 @@ export const Cart = styled.button`
   border-radius: 100%;
   font-weight: 600;
   position: absolute;
-  top: 2.4rem;
-  right: 13.4rem;
+  top: 1.6rem;
+  right: 12.8rem;
   color: white;
   border: none;
   background-color: red;

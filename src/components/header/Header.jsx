@@ -23,7 +23,7 @@ const Header = () => {
             style={{
               color: 'white',
               fontSize: '30px',
-              padding: '0 1.4rem 0 0',
+              padding: '0 1.8rem 0 0',
             }}
             icon={faShoppingCart}
           />
