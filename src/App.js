@@ -5,6 +5,8 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Footer from './components/footer/Footer';
 import ProductPage from './pages/ProductPage';
+import ApieMus from './pages/ApieMus';
+import Kontaktai from './pages/Kontaktai';
 
 function App() {
   return (
@@ -13,7 +15,9 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' exact element={<HomePage />} />
-          <Route path='/product/:id' exact element={<ProductPage />} />
+          <Route path='/product/:id' element={<ProductPage />} />
+          <Route path='/apiemus' element={<ApieMus />} />
+          <Route path='/kontaktai' element={<Kontaktai />} />
           {/* <Route element={<ProtectedRoute path='/control' element={<ControlPage />} />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />

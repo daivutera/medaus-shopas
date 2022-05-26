@@ -37,6 +37,7 @@ const ProductPage = () => {
         name={data[0].name}
         quantity={data[0].quantity_kg}
         price={data[0].price}
+        description={data[0].description}
       />
     );
   }
