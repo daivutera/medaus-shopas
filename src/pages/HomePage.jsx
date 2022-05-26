@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Loading from '../components/loading/Loading';
 import ProductList from '../components/productList/ProductList';
 
 const getData = async () => {
@@ -22,7 +23,7 @@ const ProductPage = () => {
   );
 
   if (!data) {
-    return <div>Loading</div>;
+    return <Loading />;
   }
 
   if (data) {

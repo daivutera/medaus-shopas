@@ -14,7 +14,7 @@ const ProductItem = ({ img, name, quantity, price, id }) => {
   }
   function oneItemPage(id) {
     console.log('id', id);
-    Navigate('/product');
+    Navigate(`/product/${id}`);
   }
 
   return (

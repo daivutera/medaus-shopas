@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import ProductList from '../components/productList/ProductList';
-
-const getData = async (id) => {
-  console.log('product page fetch');
-
-  const res = await fetch(
-    `https://jellyfish-app-xdnzk.ondigitalocean.app/products`
-  );
-  const data = await res.json();
-  console.log('dataoneproduct', data.data);
-  const productWithId = data.filter((object) => [
-    object.data.data.product_id === id,
-  ]);
-  console.log('productWithId', productWithId);
-  return productWithId;
-};
+import { useParams } from 'react-router-dom';
+import ProductCard from '../components/productCard/ProductCard';
 
 const ProductPage = () => {
+  const { id } = useParams();
   const [data, setData] = useState();
+  const getData = async () => {
+    console.log('product page fetch');
+    console.log('id product page', id);
+    const res = await fetch(
+      `https://jellyfish-app-xdnzk.ondigitalocean.app/products`
+    );
+    const data = await res.json();
+    const productWithId = data.data.filter(
+      (product) => product.product_id == id
+    );
+    console.log('productWithId', productWithId);
+    return productWithId;
+  };
 
   useEffect(
     () => async () => {
@@ -25,13 +25,20 @@ const ProductPage = () => {
     },
     []
   );
-
+  console.log(data, 'data kur tiktinu');
   if (!data) {
     return <div>Loading</div>;
   }
 
   if (data) {
-    return <ProductList arr={[{ data }]} />;
+    return (
+      <ProductCard
+        img={data[0].foto_url}
+        name={data[0].name}
+        quantity={data[0].quantity_kg}
+        price={data[0].price}
+      />
+    );
   }
 };
 
