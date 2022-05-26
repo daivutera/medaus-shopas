@@ -15,6 +15,7 @@ const ProductList = ({ arr }) => {
           name={product.name}
           quantity={product.quantity_kg}
           price={product.price}
+          id={product.product_id}
         />
       ))}
     </Container>

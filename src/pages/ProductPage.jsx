@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import ProductList from '../components/productList/ProductList';
 
-const getData = async () => {
-  console.log('bandau fetchinti');
+const getData = async (id) => {
+  console.log('product page fetch');
+
   const res = await fetch(
     `https://jellyfish-app-xdnzk.ondigitalocean.app/products`
   );
   const data = await res.json();
-  console.log('data', data.data);
-  return data.data;
+  console.log('dataoneproduct', data.data);
+  const productWithId = data.filter((object) => [
+    object.data.data.product_id === id,
+  ]);
+  console.log('productWithId', productWithId);
+  return productWithId;
 };
 
 const ProductPage = () => {

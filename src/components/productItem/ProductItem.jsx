@@ -4,13 +4,21 @@ import Button from './../button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import * as S from './ProductItem.style';
+import { useNavigate } from 'react-router-dom';
 
-const ProductItem = ({ img, name, quantity, price }) => {
-  function onClick() {
+const ProductItem = ({ img, name, quantity, price, id }) => {
+  const Navigate = useNavigate();
+  function onClick(e) {
+    e.stopPropagation();
     console.log('paspaude mygtuka');
   }
+  function oneItemPage(id) {
+    console.log('id', id);
+    Navigate('/product');
+  }
+
   return (
-    <S.Div>
+    <S.Div onClick={() => oneItemPage(id)}>
       <S.Img src={img} alt={name} />
       <div>
         <h3>
@@ -39,6 +47,7 @@ ProductItem.propTypes = {
   name: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default ProductItem;
