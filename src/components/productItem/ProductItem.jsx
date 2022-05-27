@@ -19,24 +19,24 @@ const ProductItem = ({ img, name, quantity, price, id }) => {
 
   return (
     <S.Div onClick={() => oneItemPage(id)}>
-      <S.Img src={img} alt={name} />
+      <img src={img} alt={name} />
       <div>
-        <h3>
+        <S.H3>
           {name} {quantity} kg{' '}
-        </h3>
-        <h3>
-          {price} €{' '}
+        </S.H3>
+        <S.H3>
+          <S.Span>{price} €</S.Span>
           <Button onClick={onClick}>
             <FontAwesomeIcon
               style={{
                 color: 'white',
                 fontSize: '20px',
-                padding: '0 0rem 0 0',
+                padding: '0 0 0 0',
               }}
               icon={faShoppingCart}
             />
           </Button>
-        </h3>
+        </S.H3>
       </div>
     </S.Div>
   );

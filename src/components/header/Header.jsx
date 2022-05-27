@@ -48,7 +48,12 @@ const Header = () => {
             }}
             icon={faShoppingCart}
           />
-          <S.Cart>{cartContext.numberInCart}</S.Cart>
+          <S.Cart
+            onClick={() => {
+              Navigate('/pirkti');
+            }}>
+            {cartContext.numberInCart}
+          </S.Cart>
           Pirkinių krepšelis
         </Button>
       </S.NumberCart>

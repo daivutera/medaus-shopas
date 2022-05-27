@@ -15,3 +15,22 @@ export const Th = styled.th`
   text-align: left;
   padding: 12px 15px;
 `;
+export const Tf = styled.td`
+  background-color: #f3662e;
+  color: #ffffff;
+  text-align: left;
+  font-size: 1.1rem;
+  padding: 12px 15px;
+`;
+export const TfTotal = styled.td`
+  background-color: #f3662e;
+  color: #ffffff;
+  text-align: left;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 12px 15px;
+`;
+export const Td = styled.td`
+  background-color: orange;
+  opacity: 0.1;
+`;

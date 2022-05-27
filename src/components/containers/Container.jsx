@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as S from './Container.style';
 
 const Container = ({ children }) => {
-  return <S.Grid> {children}</S.Grid>;
+  return <S.Flex> {children}</S.Flex>;
 };
 
 Container.propTypes = {

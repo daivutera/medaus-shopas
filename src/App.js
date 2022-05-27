@@ -18,19 +18,24 @@ function App() {
     cartArray,
     numberInCart,
     editCartArray,
+    editCartArrayRemove,
     setNumberInCartPlus,
     setNumberInCartMinus,
   };
   function editCartArray(arr) {
     setCartArray(cartArray.concat(arr));
   }
+  function editCartArrayRemove(arr) {
+    setCartArray(arr);
+    console.log('cartArr', cartArray);
+  }
   function setNumberInCartPlus(number = 1) {
     setNumberInCart(numberInCart + number);
     console.log('plius');
   }
-  function setNumberInCartMinus() {
+  function setNumberInCartMinus(number = 1) {
     if (numberInCart != 0) {
-      setNumberInCart(numberInCart - 1);
+      setNumberInCart(numberInCart - number);
       console.log('minus');
     }
   }

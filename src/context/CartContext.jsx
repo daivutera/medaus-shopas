@@ -4,6 +4,7 @@ const CartContext = React.createContext({
   cartArray: [],
   numberInCart: 0,
   editCartArray() {},
+  editCartArray() {},
   setNumberInCartPlus() {},
   setNumberInCartMinus() {},
 });

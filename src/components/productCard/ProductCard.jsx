@@ -7,11 +7,14 @@ import CartContext from '../../context/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import Message from './../message/Message';
+import { v4 as uuid } from 'uuid';
 
 const ProductCard = ({ img, name, quantity_kg, price, description, id }) => {
   const Navigate = useNavigate();
   const cartInfo = useContext(CartContext);
   const [temporaryCart, setTemporaryCart] = useState(0);
+  const [message, setMessage] = useState(false);
   function setNumberInTemporaryCartPlus() {
     setTemporaryCart(temporaryCart + 1);
     console.log('plius');
@@ -22,8 +25,10 @@ const ProductCard = ({ img, name, quantity_kg, price, description, id }) => {
       console.log('minus');
     }
   }
+
   const cartArrAfterAddToCartClick = [
     {
+      id: uuid(),
       product_id: id,
       product_quantity: temporaryCart,
       product_quantity_kg: quantity_kg,
@@ -44,9 +49,19 @@ const ProductCard = ({ img, name, quantity_kg, price, description, id }) => {
         <p>{description}</p>
         <div>
           <div>
-            <Button onClick={() => setNumberInTemporaryCartMinus()}>-</Button>
+            <Button
+              onClick={() => {
+                setNumberInTemporaryCartMinus();
+                setMessage(false);
+              }}>
+              -
+            </Button>
             <Button color='secondary'>{temporaryCart}</Button>
-            <Button onClick={() => setNumberInTemporaryCartPlus(temporaryCart)}>
+            <Button
+              onClick={() => {
+                setNumberInTemporaryCartPlus(temporaryCart);
+                setMessage(false);
+              }}>
               +
             </Button>
             <Button
@@ -56,6 +71,7 @@ const ProductCard = ({ img, name, quantity_kg, price, description, id }) => {
                   cartInfo.editCartArray(cartArrAfterAddToCartClick);
                   console.log('cartarr', cartInfo.cartArray);
                   setTemporaryCart(0);
+                  setMessage(true);
                 }
               }}>
               <FontAwesomeIcon
@@ -67,11 +83,20 @@ const ProductCard = ({ img, name, quantity_kg, price, description, id }) => {
                 icon={faShoppingCart}
               />
             </Button>
+            {message && <Message>Pridėta į pirkinių krepšelį</Message>}
           </div>
           <S.ButtonBottomDiv>
             <Button color='secondary'>Atgal</Button>
             <Button
               onClick={() => {
+                cartInfo.setNumberInCartPlus(temporaryCart);
+                if (temporaryCart > 0) {
+                  cartInfo.editCartArray(cartArrAfterAddToCartClick);
+                  console.log('cartarr', cartInfo.cartArray);
+                  console.log('pirkti');
+                  setTemporaryCart(0);
+                  Navigate('/pirkti');
+                }
                 Navigate('/pirkti');
               }}>
               Pirkti
