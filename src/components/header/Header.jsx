@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-
+import CartContext from '../../context/CartContext';
 import Button from '../button/Button';
 import * as S from './Header.style';
 
 const Header = () => {
   const Navigate = useNavigate();
+  const cartContext = useContext(CartContext);
   return (
     <S.Flex>
       <S.Img src='medutis.png' alt='' />
@@ -35,7 +36,10 @@ const Header = () => {
       <S.NumberCart>
         <S.Span>+37060400123</S.Span>
 
-        <Button>
+        <Button
+          onClick={() => {
+            Navigate('/pirkti');
+          }}>
           <FontAwesomeIcon
             style={{
               color: 'white',
@@ -44,7 +48,7 @@ const Header = () => {
             }}
             icon={faShoppingCart}
           />
-          <S.Cart>0</S.Cart>
+          <S.Cart>{cartContext.numberInCart}</S.Cart>
           Pirkinių krepšelis
         </Button>
       </S.NumberCart>

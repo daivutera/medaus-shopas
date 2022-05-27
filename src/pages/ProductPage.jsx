@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Loading from '../components/loading/Loading';
 import ProductCard from '../components/productCard/ProductCard';
 
 const ProductPage = () => {
@@ -12,6 +13,7 @@ const ProductPage = () => {
       `https://jellyfish-app-xdnzk.ondigitalocean.app/products`
     );
     const data = await res.json();
+    console.log('data', data);
     const productWithId = data.data.filter(
       (product) => product.product_id == id
     );
@@ -25,9 +27,8 @@ const ProductPage = () => {
     },
     []
   );
-  console.log(data, 'data kur tiktinu');
   if (!data) {
-    return <div>Loading</div>;
+    return <Loading></Loading>;
   }
 
   if (data) {
@@ -35,9 +36,10 @@ const ProductPage = () => {
       <ProductCard
         img={data[0].foto_url}
         name={data[0].name}
-        quantity={data[0].quantity_kg}
+        quantity_kg={data[0].quantity_kg}
         price={data[0].price}
         description={data[0].description}
+        id={data[0].product_id}
       />
     );
   }

@@ -25,3 +25,9 @@ export const ProductInfo = styled.div`
   justify-content: center;
   width: 240px;
 `;
+export const ButtonBottomDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
