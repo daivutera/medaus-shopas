@@ -17,29 +17,32 @@ import EditPage from './pages/EditPage';
 function App() {
   const [cartArray, setCartArray] = useState([]);
   const [numberInCart, setNumberInCart] = useState(0);
+  const [totalSumCart, setTotalSumCart] = useState(0);
   const currentContextValue = {
     cartArray,
     numberInCart,
+    totalSumCart,
     editCartArray,
     editCartArrayRemove,
     setNumberInCartPlus,
     setNumberInCartMinus,
+    setTotalSumCartFunc,
   };
   function editCartArray(arr) {
     setCartArray(cartArray.concat(arr));
   }
   function editCartArrayRemove(arr) {
     setCartArray(arr);
-    console.log('cartArr', cartArray);
   }
   function setNumberInCartPlus(number = 1) {
     setNumberInCart(numberInCart + number);
-    console.log('plius');
+  }
+  function setTotalSumCartFunc(number) {
+    setTotalSumCart(number);
   }
   function setNumberInCartMinus(number = 1) {
     if (numberInCart != 0) {
       setNumberInCart(numberInCart - number);
-      console.log('minus');
     }
   }
   return (

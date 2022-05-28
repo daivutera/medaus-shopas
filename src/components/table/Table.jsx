@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import * as S from './Table.style';
 import TableRow from './TableRow';
 import { v4 as uuid } from 'uuid';
+import CartContext from './../../context/CartContext';
+import { useContext } from 'react';
 
 const Table = ({ arr }) => {
   console.log('arr is tabel psl', arr);
@@ -45,8 +47,9 @@ const Table = ({ arr }) => {
       prevVal + currVal.product_price * currVal.product_quantity,
     0
   );
+  const cartContext = useContext(CartContext);
+  cartContext.setTotalSumCartFunc(totalCartAmount);
   console.log('totalCartAmount', totalCartAmount);
-  const unique_id = uuid();
   return (
     <S.Table>
       <thead>

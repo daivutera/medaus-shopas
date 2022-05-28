@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
-import CheckBox from '../components/checkBox/CheckBox';
 import Table from '../components/table/Table';
 import CartContext from '../context/CartContext';
 import Button from '../components/button/Button';
 import ContainerForPageContent from './../components/containers/ContainerForPageContent';
 import { useNavigate } from 'react-router-dom';
 import Message from './../components/message/Message';
-import Input from '../components/input/Input';
-import Form from './form/Form';
+import FormJuridinisFizinis from './../components/form/FormJuridinisFizinis';
 
 const PirkiniuKrepselis = () => {
   const Navigate = useNavigate();
@@ -16,6 +14,10 @@ const PirkiniuKrepselis = () => {
   const latestArr = cartContext.cartArray;
   const [message, setMessage] = useState(false);
   const [juridinis, setJuridinis] = useState(false);
+  const dateObj = new Date();
+  const timeStamp = `${dateObj.getFullYear()}-${
+    dateObj.getUTCMonth() + 1
+  }-${dateObj.getUTCDate()} ${dateObj.getHours()}:${dateObj.getMinutes()}`;
 
   useEffect(() => {
     console.log('panaudotas table use effect pasikeite contect arr');
@@ -28,7 +30,42 @@ const PirkiniuKrepselis = () => {
     console.log('list is pirkiniu krepselio', list);
     return <Table arr={latestArr} />;
   }
+  function sendOrderDb(e) {
+    e.preventDefault();
+    const orderedProducts = latestArr;
 
+    const orderDetails = orderedProducts.map((product) => [
+      {
+        juridinis: juridinis,
+        amount: product.product_quantity,
+        amount_total_EUR: product.product_price * product.product_quantity,
+        order_date: timeStamp,
+        product_id: product.product_id,
+        product_name: product.product_name,
+        send_to: e.target.adresas + e.target.miestas,
+        email: e.target.email,
+      },
+    ]);
+
+    const clientDataFizinis = {
+      name: e.target.name,
+      surname: e.target.pavarde,
+      adresas: e.target.adresas,
+      miestas: e.target.miestas,
+      el_pastas: e.target.email,
+      tel: e.target.tel,
+    };
+
+    const clientDataJuridinis = {
+      imones_kodas: e.target.kodas,
+      pvm_kodas: e.target.pvmKodas,
+      imones_pav: e.target.pavadinimas,
+      adresas: e.target.adresas,
+      miestas: e.target.miestas,
+      el_pastas: e.target.email,
+      tel: e.target.tel,
+    };
+  }
   function CheckifValidTobeRedirected() {
     setMessage(false);
     if (cartContext.numberInCart > 0) {
@@ -37,94 +74,17 @@ const PirkiniuKrepselis = () => {
     setMessage(true);
   }
 
-  function renderFormFizinis() {
-    return (
-      <Form formName='Fizinio asmens duomenys'>
-        <Input
-          type='text'
-          name='name'
-          id='name'
-          placeholder='Vardas, pavardė'
-        />
-        <Input
-          type='text'
-          name='adresas'
-          id='adresas'
-          placeholder='Pristatymo adresas'
-        />
-        <Input type='text' name='miestas' id='miestas' placeholder='Miestas' />
-        <Input
-          type='email'
-          name='email'
-          id='email'
-          placeholder='Elektroninis paštas'
-        />
-        <Input type='number' name='tel' id='tel' placeholder='Tel' />
-        <Button color='secondary'>
-          <CheckBox
-            id='faktura'
-            name='faktura'
-            text='Reikės sąskaitos-faktūros'
-          />
-        </Button>
-        <Button onClick={CheckifValidTobeRedirected}>Apmokėti </Button>
-      </Form>
-    );
-  }
-
-  function renderFormJuridinis() {
-    return (
-      <Form formName='Juridinio asmens duomenys'>
-        <Input
-          type='text'
-          name='pavadinimas'
-          id='pavadinimas'
-          placeholder='Įmonės pavadinimas'
-        />
-        <Input
-          type='number'
-          name='kodas'
-          id='kodas'
-          placeholder='Imonės kodas'
-        />
-        <Input
-          type='number'
-          name='pvm-kodas'
-          id='pvm-kodas'
-          placeholder='PVM mokėtojo kodas'
-        />
-        <Input
-          type='text'
-          name='adresas'
-          id='adresas'
-          placeholder='Pristatymo adresas'
-        />
-        <Input type='text' name='miestas' id='miestas' placeholder='Miestas' />
-        <Input
-          type='email'
-          name='email'
-          id='email'
-          placeholder='Elektroninis paštas'
-        />
-        <Input type='number' name='tel' id='tel' placeholder='Tel' />
-        <Button color='secondary'>
-          <CheckBox
-            id='faktura'
-            name='faktura'
-            text='Reikės sąskaitos-faktūros'
-          />
-        </Button>
-        <Button onClick={CheckifValidTobeRedirected}>Apmokėti </Button>
-      </Form>
-    );
-  }
   return (
     <ContainerForPageContent>
       {getDataFromContext()}
       <Button onClick={() => setJuridinis(false)}>Fizinis asmuo</Button>
       <Button onClick={() => setJuridinis(true)}>Juridinis asmuo</Button>
-      {!juridinis && renderFormFizinis()}
-      {juridinis && renderFormJuridinis()}
+      <FormJuridinisFizinis
+        type={juridinis ? 'juridinis' : 'fizinis'}
+        onClick={sendOrderDb}
+        onSubmit={CheckifValidTobeRedirected}
+      />
+      :
       {message && (
         <Message color='red' height='max'>
           Jūsų krepšelis tuščias!
