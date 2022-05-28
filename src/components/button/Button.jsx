@@ -18,6 +18,6 @@ Button.propTypes = {
 };
 Button.defaultProps = {
   color: 'primary',
-  type: 'button,',
+  type: 'button',
 };
 export default Button;

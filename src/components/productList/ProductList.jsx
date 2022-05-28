@@ -5,7 +5,6 @@ import ProductItem from '../productItem/ProductItem';
 import { v4 as uuid } from 'uuid';
 
 const ProductList = ({ arr }) => {
-  console.log(arr, 'arr');
   return (
     <Container>
       {!arr.length && <div>No any items in e-store</div>}
@@ -14,9 +13,9 @@ const ProductList = ({ arr }) => {
           key={product.product_id}
           img={product.foto_url}
           name={product.name}
-          quantity={product.quantity_kg}
-          price={product.price}
-          id={product.product_id}
+          quantity={Number(product.quantity_kg)}
+          price={Number(product.price)}
+          id={Number(product.product_id)}
           unique_id={uuid()}
         />
       ))}

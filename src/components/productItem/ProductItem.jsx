@@ -7,16 +7,13 @@ import * as S from './ProductItem.style';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import CartContext from './../../context/CartContext';
-import { BackgroundDiv } from './../containers/ContainerBackg.style';
 
 const ProductItem = ({ img, name, quantity, price, id, unique_id }) => {
   const Navigate = useNavigate();
   const cartContext = useContext(CartContext);
-  const cartArrFromContext = cartContext.cartArray;
 
   function onClick(e) {
     e.stopPropagation();
-    console.log('paspaude mygtuka');
     const oneItemToAddToContextArr = [
       {
         id: unique_id,
@@ -31,7 +28,6 @@ const ProductItem = ({ img, name, quantity, price, id, unique_id }) => {
     cartContext.setNumberInCartPlus();
   }
   function oneItemPage(id) {
-    console.log('id', id);
     Navigate(`/product/${id}`);
   }
 

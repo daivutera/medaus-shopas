@@ -17,7 +17,7 @@ export const Flex = styled.div`
 export const NumberCart = styled.div`
   margin-right: 2rem;
 `;
-export const Cart = styled.button`
+export const Cart = styled.div`
   border-radius: 100%;
   font-weight: 600;
   position: absolute;

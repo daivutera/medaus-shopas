@@ -18,8 +18,10 @@ function App() {
   const [cartArray, setCartArray] = useState([]);
   const [numberInCart, setNumberInCart] = useState(0);
   const [totalSumCart, setTotalSumCart] = useState(0);
+  const [inputs, setInputs] = useState({});
   const currentContextValue = {
     cartArray,
+    inputs,
     numberInCart,
     totalSumCart,
     editCartArray,
@@ -27,6 +29,7 @@ function App() {
     setNumberInCartPlus,
     setNumberInCartMinus,
     setTotalSumCartFunc,
+    setInputsFunc,
   };
   function editCartArray(arr) {
     setCartArray(cartArray.concat(arr));
@@ -44,6 +47,9 @@ function App() {
     if (numberInCart != 0) {
       setNumberInCart(numberInCart - number);
     }
+  }
+  function setInputsFunc(obj) {
+    setInputs(obj);
   }
   return (
     <CartContext.Provider value={currentContextValue}>

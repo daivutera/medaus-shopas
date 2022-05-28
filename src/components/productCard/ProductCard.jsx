@@ -17,12 +17,10 @@ const ProductCard = ({ img, name, quantity_kg, price, description, id }) => {
   const [message, setMessage] = useState(false);
   function setNumberInTemporaryCartPlus() {
     setTemporaryCart(temporaryCart + 1);
-    console.log('plius');
   }
   function setNumberInTemporaryCartMinus() {
     if (temporaryCart != 0) {
       setTemporaryCart(temporaryCart - 1);
-      console.log('minus');
     }
   }
 

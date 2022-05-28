@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Form from './Form';
 import Button from '../button/Button';
 import Input from '../input/Input';
 import CheckBox from '../checkBox/CheckBox';
+import CartContext from './../../context/CartContext';
 
-const FormJuridinisFizinis = ({ onSubmit, onClick, type }) => {
+const FormJuridinisFizinis = ({ onSubmit, type }) => {
+  const context = useContext(CartContext);
+  const [userDetails, setUserDetails] = useState({
+    email: '',
+    tel: '',
+    adresas: '',
+    name: '',
+    pavarde: '',
+    miestas: '',
+    kodas: '',
+    pvmKodas: '',
+    pavadinimas: '',
+  });
+  function saveInputsToContext() {
+    context.setInputsFunc(userDetails);
+    console.log('userDetails', userDetails);
+  }
+
   return (
     <Form
       formName={
@@ -13,12 +31,30 @@ const FormJuridinisFizinis = ({ onSubmit, onClick, type }) => {
           ? 'Juridinio asmens duomenys'
           : 'Fizinio asmens duomenys'
       }
-      onSubmit={onSubmit}>
+      onSubmit={(e) => {
+        e.preventDefault();
+        saveInputsToContext();
+        onSubmit();
+      }}>
       {type === 'fizinis' && (
-        <Input type='text' name='name' id='name' placeholder='Vardas' />
+        <Input
+          type='text'
+          name='name'
+          id='name'
+          placeholder='Vardas'
+          handleChange={(name) => setUserDetails({ ...userDetails, name })}
+        />
       )}
       {type === 'fizinis' && (
-        <Input type='text' name='pavardė' id='pavardė' placeholder='Pavardė' />
+        <Input
+          type='text'
+          name='pavardė'
+          id='pavardė'
+          placeholder='Pavardė'
+          handleChange={(pavarde) =>
+            setUserDetails({ ...userDetails, pavarde })
+          }
+        />
       )}
       {type === 'juridinis' && (
         <Input
@@ -26,6 +62,9 @@ const FormJuridinisFizinis = ({ onSubmit, onClick, type }) => {
           name='pavadinimas'
           id='pavadinimas'
           placeholder='Įmonės pavadinimas'
+          handleChange={(pavadinimas) =>
+            setUserDetails({ ...userDetails, pavadinimas })
+          }
         />
       )}
       {type === 'juridinis' && (
@@ -34,6 +73,7 @@ const FormJuridinisFizinis = ({ onSubmit, onClick, type }) => {
           name='kodas'
           id='kodas'
           placeholder='Imonės kodas'
+          handleChange={(kodas) => setUserDetails({ ...userDetails, kodas })}
         />
       )}
       {type === 'juridinis' && (
@@ -42,6 +82,9 @@ const FormJuridinisFizinis = ({ onSubmit, onClick, type }) => {
           name='pvmKodas'
           id='pvmKodas'
           placeholder='PVM mokėtojo kodas'
+          handleChange={(pvmKodas) =>
+            setUserDetails({ ...userDetails, pvmKodas })
+          }
         />
       )}
       <Input
@@ -49,15 +92,29 @@ const FormJuridinisFizinis = ({ onSubmit, onClick, type }) => {
         name='adresas'
         id='adresas'
         placeholder='Pristatymo adresas'
+        handleChange={(adresas) => setUserDetails({ ...userDetails, adresas })}
       />
-      <Input type='text' name='miestas' id='miestas' placeholder='Miestas' />
+      <Input
+        type='text'
+        name='miestas'
+        id='miestas'
+        placeholder='Miestas'
+        handleChange={(miestas) => setUserDetails({ ...userDetails, miestas })}
+      />
       <Input
         type='email'
         name='email'
         id='email'
         placeholder='Elektroninis paštas'
+        handleChange={(email) => setUserDetails({ ...userDetails, email })}
       />
-      <Input type='number' name='tel' id='tel' placeholder='Tel' />
+      <Input
+        type='number'
+        name='tel'
+        id='tel'
+        placeholder='Tel'
+        handleChange={(tel) => setUserDetails({ ...userDetails, tel })}
+      />
       <Button color='secondary'>
         <CheckBox
           id='faktura'
@@ -65,16 +122,13 @@ const FormJuridinisFizinis = ({ onSubmit, onClick, type }) => {
           text='Reikės sąskaitos-faktūros'
         />
       </Button>
-      <Button type='submit' onClick={onClick}>
-        Apmokėti
-      </Button>
+      <Button type='submit'>Apmokėti</Button>
     </Form>
   );
 };
 
 FormJuridinisFizinis.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['fizinis', 'juridinis']).isRequired,
 };
 

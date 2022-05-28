@@ -7,12 +7,6 @@ import CartContext from './../../context/CartContext';
 import { useContext } from 'react';
 
 const Table = ({ arr }) => {
-  console.log('arr is tabel psl', arr);
-  useEffect(() => {
-    getnerateDataFromArr();
-    console.log('!!!table use effect veikia');
-  }, [arr]);
-
   function getnerateDataFromArr() {
     return (
       <tbody>
