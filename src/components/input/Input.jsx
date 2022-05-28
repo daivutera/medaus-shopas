@@ -5,7 +5,7 @@ import * as S from './Input.style';
 const Input = ({ type, name, id, placeholder, label }) => {
   return (
     <div>
-      <label htmlFor={id}>{label}</label>
+      <S.Label htmlFor={id}>{label}</S.Label>
       <S.Input type={type} name={name} id={id} placeholder={placeholder} />
     </div>
   );
