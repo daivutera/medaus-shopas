@@ -10,6 +10,9 @@ import Kontaktai from './pages/Kontaktai';
 import PirkiniuKrepselis from './pages/PirkiniuKrepselis';
 import CartContext from './context/CartContext';
 import { useState } from 'react';
+import UzakymasPateiktas from './pages/UzakymasPateiktas';
+import AdminPage from './pages/AdminPage';
+import EditPage from './pages/EditPage';
 
 function App() {
   const [cartArray, setCartArray] = useState([]);
@@ -50,9 +53,14 @@ function App() {
             <Route path='/apiemus' element={<ApieMus />} />
             <Route path='/kontaktai' element={<Kontaktai />} />
             <Route path='/pirkti' element={<PirkiniuKrepselis />} />
+            <Route path='/uzsakymas' element={<UzakymasPateiktas />} />
+
+            <Route path='/admin' element={<AdminPage />} />
+            <Route path='/edit' element={<EditPage />} />
             {/* <Route element={<ProtectedRoute path='/control' element={<ControlPage />} />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
+         
         <Route path='*' element={<NotFound />} /> */}
           </Routes>
         </ContainerBackg>

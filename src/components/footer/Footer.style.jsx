@@ -10,3 +10,6 @@ export const Footer = styled.div`
   background-color: white;
   z-index: 1;
 `;
+export const Span = styled.span`
+  cursor: pointer;
+`;

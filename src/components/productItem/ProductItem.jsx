@@ -5,12 +5,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import * as S from './ProductItem.style';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import CartContext from './../../context/CartContext';
+import { BackgroundDiv } from './../containers/ContainerBackg.style';
 
-const ProductItem = ({ img, name, quantity, price, id }) => {
+const ProductItem = ({ img, name, quantity, price, id, unique_id }) => {
   const Navigate = useNavigate();
+  const cartContext = useContext(CartContext);
+  const cartArrFromContext = cartContext.cartArray;
+
   function onClick(e) {
     e.stopPropagation();
     console.log('paspaude mygtuka');
+    const oneItemToAddToContextArr = [
+      {
+        id: unique_id,
+        product_id: id,
+        product_name: name,
+        product_price: price,
+        product_quantity: 1,
+        product_quantity_kg: quantity,
+      },
+    ];
+    cartContext.editCartArray(oneItemToAddToContextArr);
+    cartContext.setNumberInCartPlus();
   }
   function oneItemPage(id) {
     console.log('id', id);
@@ -48,6 +66,7 @@ ProductItem.propTypes = {
   quantity: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
+  unique_id: PropTypes.node.isRequired,
 };
 
 export default ProductItem;

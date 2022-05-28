@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Container from '../containers/Container';
-import ProductItem from '../productItem/ProductItem';
+import ProductItemAdmin from '../productItem/ProductItemAdmin';
 import { v4 as uuid } from 'uuid';
 
-const ProductList = ({ arr }) => {
+const ProductListAdmin = ({ arr }) => {
   console.log(arr, 'arr');
   return (
     <Container>
       {!arr.length && <div>No any items in e-store</div>}
       {arr[0].data.map((product) => (
-        <ProductItem
+        <ProductItemAdmin
           key={product.product_id}
           img={product.foto_url}
           name={product.name}
@@ -24,8 +24,8 @@ const ProductList = ({ arr }) => {
   );
 };
 
-ProductList.propTypes = {
+ProductListAdmin.propTypes = {
   arr: PropTypes.array.isRequired,
 };
 
-export default ProductList;
+export default ProductListAdmin;

@@ -1,7 +1,8 @@
 import React from 'react';
+import ContainerForPageContent from './../components/containers/ContainerForPageContent';
 
 const Kontaktai = () => {
-  return <div>Kontaktai</div>;
+  return <ContainerForPageContent>Kontaktai</ContainerForPageContent>;
 };
 
 export default Kontaktai;

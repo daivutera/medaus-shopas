@@ -35,7 +35,6 @@ const Table = ({ arr }) => {
             product_price={oneItem.product_price}
           />
         ))}
-        ;
       </tbody>
     );
   }
