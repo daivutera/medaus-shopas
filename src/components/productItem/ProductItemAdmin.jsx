@@ -34,7 +34,7 @@ const ProductItemAdmin = ({ img, name, quantity, price, id, unique_id }) => {
   }
   function onClickEdit(e) {
     e.stopPropagation();
-    Navigate('/edit');
+    Navigate(`/edit/${id}`);
   }
   async function deleteItemFromDb(id) {
     console.log('bandau delete fetchinti');

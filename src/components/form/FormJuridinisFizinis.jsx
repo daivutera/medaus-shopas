@@ -21,7 +21,6 @@ const FormJuridinisFizinis = ({ onSubmit, type }) => {
   });
   function saveInputsToContext() {
     context.setInputsFunc(userDetails);
-    console.log('userDetails', userDetails);
   }
 
   return (
@@ -48,8 +47,8 @@ const FormJuridinisFizinis = ({ onSubmit, type }) => {
       {type === 'fizinis' && (
         <Input
           type='text'
-          name='pavardė'
-          id='pavardė'
+          name='pavarde'
+          id='pavarde'
           placeholder='Pavardė'
           handleChange={(pavarde) =>
             setUserDetails({ ...userDetails, pavarde })

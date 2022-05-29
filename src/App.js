@@ -10,18 +10,22 @@ import Kontaktai from './pages/Kontaktai';
 import PirkiniuKrepselis from './pages/PirkiniuKrepselis';
 import CartContext from './context/CartContext';
 import { useState } from 'react';
-import UzakymasPateiktas from './pages/UzakymasPateiktas';
+import UzsakymasPateiktas from './pages/UzsakymasPateiktas';
 import AdminPage from './pages/AdminPage';
-import EditPage from './pages/EditPage';
+import ProductPageEdit from './pages/ProductPageEdit';
 
 function App() {
   const [cartArray, setCartArray] = useState([]);
   const [numberInCart, setNumberInCart] = useState(0);
   const [totalSumCart, setTotalSumCart] = useState(0);
   const [inputs, setInputs] = useState({});
+  const [editInputs, setEditInputs] = useState({});
+  const [error, setError] = useState(false);
   const currentContextValue = {
     cartArray,
     inputs,
+    editInputs,
+    error,
     numberInCart,
     totalSumCart,
     editCartArray,
@@ -30,9 +34,14 @@ function App() {
     setNumberInCartMinus,
     setTotalSumCartFunc,
     setInputsFunc,
+    setEditInputsFunc,
+    setErrorFunc,
   };
   function editCartArray(arr) {
     setCartArray(cartArray.concat(arr));
+  }
+  function setErrorFunc(bool) {
+    setError(bool);
   }
   function editCartArrayRemove(arr) {
     setCartArray(arr);
@@ -51,6 +60,9 @@ function App() {
   function setInputsFunc(obj) {
     setInputs(obj);
   }
+  function setEditInputsFunc(obj) {
+    setEditInputs(obj);
+  }
   return (
     <CartContext.Provider value={currentContextValue}>
       <div className='App'>
@@ -62,10 +74,10 @@ function App() {
             <Route path='/apiemus' element={<ApieMus />} />
             <Route path='/kontaktai' element={<Kontaktai />} />
             <Route path='/pirkti' element={<PirkiniuKrepselis />} />
-            <Route path='/uzsakymas' element={<UzakymasPateiktas />} />
+            <Route path='/uzsakymas' element={<UzsakymasPateiktas />} />
 
             <Route path='/admin' element={<AdminPage />} />
-            <Route path='/edit' element={<EditPage />} />
+            <Route path='/edit/:id' element={<ProductPageEdit />} />
             {/* <Route element={<ProtectedRoute path='/control' element={<ControlPage />} />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />

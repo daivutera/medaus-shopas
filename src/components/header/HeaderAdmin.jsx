@@ -17,6 +17,12 @@ const HeaderAdmin = () => {
         </Button>
         <Button
           onClick={() => {
+            Navigate('/add');
+          }}>
+          Pridėti prekę
+        </Button>
+        <Button
+          onClick={() => {
             Navigate('/uzsakymai');
           }}>
           Užsakymai
