@@ -5,6 +5,7 @@ const CartContext = React.createContext({
   numberInCart: 0,
   totalSumCart: 0,
   inputs: {},
+  editInputs: {},
   error: false,
   editCartArray() {},
   editCartArrayRemove() {},
@@ -12,6 +13,7 @@ const CartContext = React.createContext({
   setNumberInCartMinus() {},
   setTotalSumCartFunc() {},
   setInputsFunc() {},
+  setEditInputsFunc() {},
   setErrorFunc() {},
 });
 CartContext.displayName = 'CartContext';

@@ -84,7 +84,13 @@ const ProductCard = ({ img, name, quantity_kg, price, description, id }) => {
             {message && <Message>Pridėta į pirkinių krepšelį</Message>}
           </div>
           <S.ButtonBottomDiv>
-            <Button color='secondary'>Atgal</Button>
+            <Button
+              onClick={() => {
+                Navigate('/');
+              }}
+              color='secondary'>
+              Atgal
+            </Button>
             <Button
               onClick={() => {
                 cartInfo.setNumberInCartPlus(temporaryCart);

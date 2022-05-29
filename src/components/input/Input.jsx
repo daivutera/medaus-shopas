@@ -25,7 +25,7 @@ const Input = ({ type, name, id, placeholder, label, handleChange }) => {
 };
 
 Input.propTypes = {
-  type: PropTypes.oneOf(['text', 'number', 'email']),
+  type: PropTypes.oneOf(['text', 'number', 'email', 'url']),
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,

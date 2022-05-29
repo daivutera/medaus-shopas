@@ -10,6 +10,11 @@ const ProductPageEdit = () => {
   const [data, setData] = useState();
   const inputContext = useContext(CartContext);
   const [inputData, setInputData] = useState(inputContext.editInputs);
+  useEffect(() => {
+    createObjForFetch();
+    console.log('dirba inputu jautrukas');
+  }, [inputContext.editInputs]);
+
   const getData = async () => {
     const res = await fetch(
       `https://jellyfish-app-xdnzk.ondigitalocean.app/products`
@@ -20,21 +25,33 @@ const ProductPageEdit = () => {
     );
     return productWithId;
   };
-  const collectedDataFromInputs = {
-    name: inputData.name,
-    quantity_in_stock: inputData.quantity_in_stock,
-    price: inputData.price,
-    foto_url: inputData.foto_url,
-    quantity_kg: inputData.quantity_kg,
-    description: inputData.description,
-  };
   function createObjForFetch() {
-    const body = collectedDataFromInputs;
-    console.log('body', body);
+    const body = {
+      name: inputData.name,
+      quantity_in_stock: inputData.quantity_in_stock,
+      price: inputData.price,
+      foto_url: inputData.foto_url,
+      quantity_kg: inputData.quantity_kg,
+      description: inputData.description,
+    };
+    console.log('inputDataSAU', inputData);
+    console.log('body', JSON.stringify(body));
     return body;
   }
+  async function FetchPatch() {
+    const body = createObjForFetch();
+    const resp = await fetch('url', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    const data = await resp.json();
+    console.log('dataispatchfetch', data);
+  }
 
-  const inputs = useEffect(
+  useEffect(
     () => async () => {
       setData(await getData());
     },
@@ -66,8 +83,8 @@ const ProductPageEdit = () => {
         <div style={{ width: '35rem' }}>
           <FormEdit
             onSubmit={() => {
-              console.log('fetchint reiks', collectedDataFromInputs);
-              createObjForFetch();
+              console.log('fetchint reiks', createObjForFetch());
+              FetchPatch();
             }}
           />
         </div>

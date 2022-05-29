@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Form from './Form';
 import Button from '../button/Button';
@@ -19,13 +19,15 @@ const FormEdit = ({ onSubmit }) => {
     context.setEditInputsFunc(fieldsToEdit);
     console.log('fieldsToEdit', fieldsToEdit);
   }
+  useEffect(() => {
+    saveInputsToContext();
+  }, [fieldsToEdit]);
 
   return (
     <Form
       formName='Pakeisti prekės duomenis'
       onSubmit={(e) => {
         e.preventDefault();
-        saveInputsToContext();
         onSubmit();
       }}>
       <Input

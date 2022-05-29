@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Div = styled.div`
   background-color: rgb(255, 255, 255);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   cursor: pointer;
   width: 600px;
