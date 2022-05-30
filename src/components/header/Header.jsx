@@ -40,21 +40,23 @@ const Header = () => {
           onClick={() => {
             Navigate('/pirkti');
           }}>
-          <FontAwesomeIcon
-            style={{
-              color: 'white',
-              fontSize: '30px',
-              padding: '0 1.8rem 0 0',
-            }}
-            icon={faShoppingCart}
-          />
-          <S.Cart
-            onClick={() => {
-              Navigate('/pirkti');
-            }}>
-            {cartContext.numberInCart}
-          </S.Cart>
-          Pirkinių krepšelis
+          <S.DivCart>
+            <FontAwesomeIcon
+              style={{
+                color: 'white',
+                fontSize: '30px',
+                padding: '0 1.8rem 0 0',
+              }}
+              icon={faShoppingCart}
+            />
+            <S.Cart
+              onClick={() => {
+                Navigate('/pirkti');
+              }}>
+              {cartContext.numberInCart}
+            </S.Cart>
+            Pirkinių krepšelis
+          </S.DivCart>
         </Button>
       </S.NumberCart>
     </S.Flex>
