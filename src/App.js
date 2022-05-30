@@ -13,6 +13,8 @@ import { useState } from 'react';
 import UzsakymasPateiktas from './pages/UzsakymasPateiktas';
 import AdminPage from './pages/AdminPage';
 import ProductPageEdit from './pages/ProductPageEdit';
+import AddPage from './pages/AddPage';
+import OrdersPage from './pages/OrdersPage';
 
 function App() {
   const [cartArray, setCartArray] = useState([]);
@@ -20,11 +22,13 @@ function App() {
   const [totalSumCart, setTotalSumCart] = useState(0);
   const [inputs, setInputs] = useState({});
   const [editInputs, setEditInputs] = useState({});
+  const [addInputs, setAddInputs] = useState({});
   const [error, setError] = useState(false);
   const currentContextValue = {
     cartArray,
     inputs,
     editInputs,
+    addInputs,
     error,
     numberInCart,
     totalSumCart,
@@ -35,6 +39,7 @@ function App() {
     setTotalSumCartFunc,
     setInputsFunc,
     setEditInputsFunc,
+    setAddInputsFunc,
     setErrorFunc,
   };
   function editCartArray(arr) {
@@ -63,6 +68,9 @@ function App() {
   function setEditInputsFunc(obj) {
     setEditInputs(obj);
   }
+  function setAddInputsFunc(obj) {
+    setAddInputs(obj);
+  }
   return (
     <CartContext.Provider value={currentContextValue}>
       <div className='App'>
@@ -74,10 +82,11 @@ function App() {
             <Route path='/apiemus' element={<ApieMus />} />
             <Route path='/kontaktai' element={<Kontaktai />} />
             <Route path='/pirkti' element={<PirkiniuKrepselis />} />
-            <Route path='/uzsakymas' element={<UzsakymasPateiktas />} />
 
             <Route path='/admin' element={<AdminPage />} />
             <Route path='/edit/:id' element={<ProductPageEdit />} />
+            <Route path='/add' element={<AddPage />} />
+            <Route path='/uzsakymai' element={<OrdersPage />} />
             {/* <Route element={<ProtectedRoute path='/control' element={<ControlPage />} />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />

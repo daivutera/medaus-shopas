@@ -6,8 +6,8 @@ import Input from '../input/Input';
 import CheckBox from '../checkBox/CheckBox';
 import CartContext from './../../context/CartContext';
 
-const FormJuridinisFizinis = ({ onSubmit, type }) => {
-  const context = useContext(CartContext);
+const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
+  const cartContext = useContext(CartContext);
   const [userDetails, setUserDetails] = useState({
     email: '',
     tel: '',
@@ -19,8 +19,84 @@ const FormJuridinisFizinis = ({ onSubmit, type }) => {
     pvmKodas: '',
     pavadinimas: '',
   });
-  function saveInputsToContext() {
-    context.setInputsFunc(userDetails);
+  const [error, setError] = useState(false);
+  const orderedProducts = cartContext.cartArray;
+
+  function returnUrl() {
+    if (juridinis) {
+      return 'https://jellyfish-app-xdnzk.ondigitalocean.app/control/juridiniai';
+    }
+    if (!juridinis) {
+      return 'https://jellyfish-app-xdnzk.ondigitalocean.app/control/fiziniai';
+    }
+  }
+  function collectDataFromInputsAndValidate() {
+    let clientDataFromInputs = {};
+    const name = userDetails.name;
+    const surname = userDetails.pavarde;
+    const imones_kodas = userDetails.kodas;
+    const pvm_kodas = userDetails.pvmKodas;
+    const imones_pav = userDetails.pavadinimas;
+    const adresas = userDetails.adresas;
+    const miestas = userDetails.miestas;
+    const el_pastas = userDetails.email;
+    const tel = userDetails.tel;
+    console.log(
+      'duomenysSURINKTI',
+      name,
+      surname,
+      imones_kodas,
+      pvm_kodas,
+      imones_pav,
+      adresas,
+      miestas,
+      el_pastas,
+      tel
+    );
+    if (!juridinis) {
+      console.log('ZZZZZZZZZfizinis');
+      clientDataFromInputs = {
+        name,
+        surname,
+        adresas,
+        miestas,
+        el_pastas,
+        tel,
+      };
+      console.log('ZZZZZZZZZfizinis', clientDataFromInputs);
+    }
+    if (juridinis) {
+      console.log('ZZZZZZZZZjuridinis');
+      clientDataFromInputs = {
+        imones_kodas,
+        pvm_kodas,
+        imones_pav,
+        adresas,
+        miestas,
+        el_pastas,
+        tel,
+      };
+    }
+    console.log('clientDataFromInputs', clientDataFromInputs);
+    return clientDataFromInputs;
+  }
+  async function FetchClientData() {
+    if (orderedProducts.length) {
+      const clientDataFromInputs = collectDataFromInputsAndValidate();
+      const respClientData = await fetch(returnUrl(), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(clientDataFromInputs),
+      });
+      console.log(
+        'dataFromInputsFetch==========',
+        JSON.stringify(clientDataFromInputs)
+      );
+      const dataClient = await respClientData.json();
+      console.log('dataAfterClientDatafETCH', dataClient);
+    }
   }
 
   return (
@@ -32,7 +108,7 @@ const FormJuridinisFizinis = ({ onSubmit, type }) => {
       }
       onSubmit={(e) => {
         e.preventDefault();
-        saveInputsToContext();
+        FetchClientData();
         onSubmit();
       }}>
       {type === 'fizinis' && (
@@ -121,7 +197,9 @@ const FormJuridinisFizinis = ({ onSubmit, type }) => {
           text='Reikės sąskaitos-faktūros'
         />
       </Button>
-      <Button type='submit'>Apmokėti</Button>
+      <Button type='submit' disabled={orderedProducts.length ? false : true}>
+        Apmokėti
+      </Button>
     </Form>
   );
 };

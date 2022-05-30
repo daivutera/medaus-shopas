@@ -19,17 +19,10 @@ const PirkiniuKrepselis = () => {
   );
 
   useEffect(() => {
+    console.log('pasikeite ordered');
     getDataFromContextCreateTable();
   }, [orderedProducts]);
 
-  function returnUrl() {
-    if (juridinis) {
-      return 'https://jellyfish-app-xdnzk.ondigitalocean.app/control/juridiniai';
-    }
-    if (!juridinis) {
-      return 'https://jellyfish-app-xdnzk.ondigitalocean.app/control/fiziniai';
-    }
-  }
   function getDataFromContextCreateTable() {
     const list = orderedProducts.map((cartItem) => cartItem);
     console.log('list is pirkiniu krepselio', list);
@@ -38,6 +31,7 @@ const PirkiniuKrepselis = () => {
     }
     return <Table arr={orderedProducts} />;
   }
+
   async function sendOrderFetch() {
     orderedProducts.forEach(async (product) => {
       console.log('forEachproduct', product);
@@ -67,79 +61,8 @@ const PirkiniuKrepselis = () => {
       console.log('dataAfterOrderfETCH', data);
     });
   }
-  function collectDataFromInputsAndValidate() {
-    console.log('??????????????????????');
-    console.log('contextInputs', userDetailsContext);
-    let clientDataFromInputs = {};
-
-    const name = userDetailsContext.name;
-    const surname = userDetailsContext.pavarde;
-    const imones_kodas = userDetailsContext.kodas;
-    const pvm_kodas = userDetailsContext.pvmKodas;
-    const imones_pav = userDetailsContext.pavadinimas;
-    const adresas = userDetailsContext.adresas;
-    const miestas = userDetailsContext.miestas;
-    const el_pastas = userDetailsContext.email;
-    const tel = userDetailsContext.tel;
-    console.log(
-      'duomenyssurinkti',
-      name,
-      surname,
-      imones_kodas,
-      pvm_kodas,
-      imones_pav,
-      adresas,
-      miestas,
-      el_pastas,
-      tel
-    );
-    if (!juridinis) {
-      console.log('ZZZZZZZZZfizinis');
-      clientDataFromInputs = {
-        name,
-        surname,
-        adresas,
-        miestas,
-        el_pastas,
-        tel,
-      };
-      console.log('ZZZZZZZZZfizinis', clientDataFromInputs);
-    }
-    if (juridinis) {
-      console.log('ZZZZZZZZZjuridinis');
-      clientDataFromInputs = {
-        imones_kodas,
-        pvm_kodas,
-        imones_pav,
-        adresas,
-        miestas,
-        el_pastas,
-        tel,
-      };
-    }
-    console.log('clientDataFromInputs', clientDataFromInputs);
-    return clientDataFromInputs;
-  }
-  async function FetchClientData() {
-    const clientDataFromInputs = collectDataFromInputsAndValidate();
-    const respClientData = await fetch(returnUrl(), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(clientDataFromInputs),
-    });
-    console.log(
-      'dataFromInputsFetch==========',
-      JSON.stringify(clientDataFromInputs)
-    );
-    const dataClient = await respClientData.json();
-    console.log('dataAfterClientDatafETCH', dataClient);
-  }
 
   function sendOrderDb() {
-    collectDataFromInputsAndValidate();
-    FetchClientData();
     CheckifValidToFinishPurchase();
     sendOrderFetch();
     setOrderSend(true);
@@ -170,6 +93,7 @@ const PirkiniuKrepselis = () => {
         <FormJuridinisFizinis
           type={juridinis ? 'juridinis' : 'fizinis'}
           onSubmit={sendOrderDb}
+          juridinis={juridinis}
         />
       )}
 
@@ -179,7 +103,7 @@ const PirkiniuKrepselis = () => {
         </Message>
       )}
 
-      {orderSent && <UzsakymasPateiktas />}
+      {orderSent && !message && <UzsakymasPateiktas />}
     </ContainerForPageContent>
   );
 };

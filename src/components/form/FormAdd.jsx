@@ -3,8 +3,8 @@ import Form from './Form';
 import Button from '../button/Button';
 import Input from '../input/Input';
 
-const FormEdit = () => {
-  const [fieldsToEdit, setFieldsToEdit] = useState({
+const FormAdd = () => {
+  const [fieldsToAdd, setFieldsToAdd] = useState({
     name: '',
     quantity_in_stock: '',
     price: '',
@@ -15,20 +15,20 @@ const FormEdit = () => {
 
   function createObjForFetch() {
     const body = {
-      name: fieldsToEdit.name,
-      quantity_in_stock: fieldsToEdit.quantity_in_stock,
-      price: fieldsToEdit.price,
-      foto_url: fieldsToEdit.foto_url,
-      quantity_kg: fieldsToEdit.quantity_kg,
-      description: fieldsToEdit.description,
+      name: fieldsToAdd.name,
+      quantity_in_stock: fieldsToAdd.quantity_in_stock,
+      price: fieldsToAdd.price,
+      foto_url: fieldsToAdd.foto_url,
+      quantity_kg: fieldsToAdd.quantity_kg,
+      description: fieldsToAdd.description,
     };
     console.log('body', JSON.stringify(body));
     return body;
   }
-  async function FetchPatch() {
+  async function fetchAdd() {
     const body = createObjForFetch();
     const resp = await fetch('url', {
-      method: 'PATCH',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -38,12 +38,12 @@ const FormEdit = () => {
     console.log('dataispatchfetch', data);
   }
   function onSubmit() {
-    FetchPatch();
+    fetchAdd();
   }
 
   return (
     <Form
-      formName='Pakeisti prekės duomenis'
+      formName='Duomenys apie prekę'
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit();
@@ -53,7 +53,7 @@ const FormEdit = () => {
         name='name'
         id='name'
         placeholder='Prekės pavadinimas'
-        handleChange={(name) => setFieldsToEdit({ ...fieldsToEdit, name })}
+        handleChange={(name) => setFieldsToAdd({ ...fieldsToAdd, name })}
       />
       <Input
         type='number'
@@ -61,7 +61,7 @@ const FormEdit = () => {
         id='quantity_in_stock'
         placeholder='Prekės kiekis sandėlyje'
         handleChange={(quantity_in_stock) =>
-          setFieldsToEdit({ ...fieldsToEdit, quantity_in_stock })
+          setFieldsToAdd({ ...fieldsToAdd, quantity_in_stock })
         }
       />
       <Input
@@ -69,7 +69,7 @@ const FormEdit = () => {
         name='price'
         id='price'
         placeholder='Kaina'
-        handleChange={(price) => setFieldsToEdit({ ...fieldsToEdit, price })}
+        handleChange={(price) => setFieldsToAdd({ ...fieldsToAdd, price })}
       />
       <Input
         type='url'
@@ -77,7 +77,7 @@ const FormEdit = () => {
         id='foto_url'
         placeholder='Nuotraukos URL'
         handleChange={(foto_url) =>
-          setFieldsToEdit({ ...fieldsToEdit, foto_url })
+          setFieldsToAdd({ ...fieldsToAdd, foto_url })
         }
       />
       <Input
@@ -86,7 +86,7 @@ const FormEdit = () => {
         id='quantity_kg'
         placeholder='Kiekis, kg'
         handleChange={(quantity_kg) =>
-          setFieldsToEdit({ ...fieldsToEdit, quantity_kg })
+          setFieldsToAdd({ ...fieldsToAdd, quantity_kg })
         }
       />
       <Input
@@ -95,14 +95,14 @@ const FormEdit = () => {
         id='description'
         placeholder='Prekės aprašymas'
         handleChange={(description) =>
-          setFieldsToEdit({ ...fieldsToEdit, description })
+          setFieldsToAdd({ ...fieldsToAdd, description })
         }
       />
       <div style={{ marginTop: '1rem' }}>
-        <Button type='submit'>Atnaujinti duomenis</Button>
+        <Button type='submit'>Pateikti duomenis</Button>
       </div>
     </Form>
   );
 };
 
-export default FormEdit;
+export default FormAdd;

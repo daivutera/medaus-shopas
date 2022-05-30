@@ -1,10 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
+import FormEditAdd from '../components/form/FormAdd';
+import HeaderAdmin from './../components/header/HeaderAdmin';
+import ContainerForPageContent from '../components/containers/ContainerForPageContent';
 
-const AddPage = (props) => {
-  return <div>AddPage</div>;
+const AddPage = () => {
+  return (
+    <>
+      <HeaderAdmin />
+      <ContainerForPageContent>
+        <FormEditAdd />
+      </ContainerForPageContent>
+    </>
+  );
 };
-
-AddPage.propTypes = {};
 
 export default AddPage;

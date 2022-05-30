@@ -6,12 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-const ProductItemAdmin = ({ img, name, quantity, price, id, unique_id }) => {
+const ProductItemAdmin = ({ img, name, quantity, price, id }) => {
   const Navigate = useNavigate();
 
   function onClickDelete(e) {
     e.stopPropagation();
-    console.log('paspaude');
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
@@ -37,9 +36,7 @@ const ProductItemAdmin = ({ img, name, quantity, price, id, unique_id }) => {
     Navigate(`/edit/${id}`);
   }
   async function deleteItemFromDb(id) {
-    console.log('bandau delete fetchinti');
     const itemToDelete = { product_id: id };
-    console.log(itemToDelete, 'itemtodelete');
 
     const res = await fetch(
       `https://jellyfish-app-xdnzk.ondigitalocean.app/products/delete`,
@@ -52,7 +49,6 @@ const ProductItemAdmin = ({ img, name, quantity, price, id, unique_id }) => {
       }
     );
     const data = await res.json();
-    console.log('data', data);
     return data;
   }
 
