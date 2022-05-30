@@ -46,7 +46,6 @@ const FormAdd = () => {
     if (data === false) {
       setError(true);
     }
-    console.log('dataispatchfetch', data);
     setFieldsToAdd({
       name: '',
       quantity_in_stock: '',
