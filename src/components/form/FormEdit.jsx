@@ -3,11 +3,13 @@ import Form from './Form';
 import Button from '../button/Button';
 import Input from '../input/Input';
 import Message from '../message/Message';
+import { useParams } from 'react-router-dom';
 
 const FormEdit = () => {
   const token = localStorage.getItem('token');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const { id } = useParams();
   const [fieldsToEdit, setFieldsToEdit] = useState({
     name: '',
     quantity_in_stock: '',
@@ -19,12 +21,15 @@ const FormEdit = () => {
 
   function createObjForFetch() {
     const body = {
-      name: fieldsToEdit.name,
-      quantity_in_stock: fieldsToEdit.quantity_in_stock,
-      price: fieldsToEdit.price,
-      foto_url: fieldsToEdit.foto_url,
-      quantity_kg: fieldsToEdit.quantity_kg,
-      description: fieldsToEdit.description,
+      product_id: id,
+      updatedInfoArr: [
+        { name: 'name', value: fieldsToEdit.name },
+        { name: 'quantity_in_stock', value: fieldsToEdit.quantity_in_stock },
+        { name: 'price', value: fieldsToEdit.price },
+        { name: 'foto_url', value: fieldsToEdit.foto_url },
+        { name: 'quantity_kg', value: fieldsToEdit.quantity_kg },
+        { name: 'description', value: fieldsToEdit.description },
+      ],
     };
     return body;
   }
