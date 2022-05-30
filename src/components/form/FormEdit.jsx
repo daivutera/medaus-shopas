@@ -23,12 +23,12 @@ const FormEdit = () => {
     const body = {
       product_id: id,
       updatedInfoArr: [
-        { name: 'name', value: fieldsToEdit.name },
+        { name: 'name', value: `'${fieldsToEdit.name}'` },
         { name: 'quantity_in_stock', value: fieldsToEdit.quantity_in_stock },
         { name: 'price', value: fieldsToEdit.price },
-        { name: 'foto_url', value: fieldsToEdit.foto_url },
+        { name: 'foto_url', value: `'${fieldsToEdit.foto_url}'` },
         { name: 'quantity_kg', value: fieldsToEdit.quantity_kg },
-        { name: 'description', value: fieldsToEdit.description },
+        { name: 'description', value: `'${fieldsToEdit.description}'` },
       ],
     };
     return body;
