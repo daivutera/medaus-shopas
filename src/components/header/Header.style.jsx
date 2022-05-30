@@ -6,6 +6,11 @@ export const Span = styled.span`
   font-weight: 600;
   margin: 0.2rem;
   color: #f58607;
+`;
+export const DivCart = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   position: relative;
 `;
 export const Flex = styled.div`
@@ -21,8 +26,8 @@ export const Cart = styled.div`
   border-radius: 100%;
   font-weight: 600;
   position: absolute;
-  top: 1.6rem;
-  right: 12.8rem;
+  top: -0.6rem;
+  right: 10rem;
   color: white;
   border: none;
   background-color: red;
