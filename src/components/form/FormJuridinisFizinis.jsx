@@ -5,9 +5,12 @@ import Button from '../button/Button';
 import Input from '../input/Input';
 import CheckBox from '../checkBox/CheckBox';
 import CartContext from './../../context/CartContext';
+import Message from './../message/Message';
 
 const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
   const cartContext = useContext(CartContext);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [userDetails, setUserDetails] = useState({
     email: '',
     tel: '',
@@ -19,7 +22,6 @@ const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
     pvmKodas: '',
     pavadinimas: '',
   });
-  const [error, setError] = useState(false);
   const orderedProducts = cartContext.cartArray;
 
   function returnUrl() {
@@ -41,20 +43,8 @@ const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
     const miestas = userDetails.miestas;
     const el_pastas = userDetails.email;
     const tel = userDetails.tel;
-    console.log(
-      'duomenysSURINKTI',
-      name,
-      surname,
-      imones_kodas,
-      pvm_kodas,
-      imones_pav,
-      adresas,
-      miestas,
-      el_pastas,
-      tel
-    );
+
     if (!juridinis) {
-      console.log('ZZZZZZZZZfizinis');
       clientDataFromInputs = {
         name,
         surname,
@@ -63,10 +53,8 @@ const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
         el_pastas,
         tel,
       };
-      console.log('ZZZZZZZZZfizinis', clientDataFromInputs);
     }
     if (juridinis) {
-      console.log('ZZZZZZZZZjuridinis');
       clientDataFromInputs = {
         imones_kodas,
         pvm_kodas,
@@ -77,10 +65,10 @@ const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
         tel,
       };
     }
-    console.log('clientDataFromInputs', clientDataFromInputs);
     return clientDataFromInputs;
   }
   async function FetchClientData() {
+    setError(false);
     if (orderedProducts.length) {
       const clientDataFromInputs = collectDataFromInputsAndValidate();
       const respClientData = await fetch(returnUrl(), {
@@ -90,17 +78,16 @@ const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
         },
         body: JSON.stringify(clientDataFromInputs),
       });
-      console.log(
-        'dataFromInputsFetch==========',
-        JSON.stringify(clientDataFromInputs)
-      );
       const dataClient = await respClientData.json();
-      console.log('dataAfterClientDatafETCH', dataClient);
+      if (dataClient === false) {
+        setError(true);
+      } else {
+        setSuccess(true);
+      }
     }
   }
   async function sendOrderFetch() {
     orderedProducts.forEach(async (product) => {
-      console.log('forEachproduct', product);
       const totalAmount = product.product_price * product.product_quantity;
       const sendTo = `${userDetails.adresas} ${userDetails.miestas}`;
       const body = {
@@ -112,7 +99,6 @@ const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
         send_to: sendTo,
         email: userDetails.email,
       };
-      console.log('orderbody============', JSON.stringify(body));
       const resp = await fetch(
         'https://jellyfish-app-xdnzk.ondigitalocean.app/control/orders',
         {
@@ -124,7 +110,11 @@ const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
         }
       );
       const data = await resp.json();
-      console.log('dataAfterOrderfETCH', data);
+      if (data === false) {
+        setError(true);
+      } else {
+        setSuccess(true);
+      }
     });
   }
 
@@ -230,6 +220,9 @@ const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
       <Button type='submit' disabled={orderedProducts.length ? false : true}>
         Apmokėti
       </Button>
+      {error && (
+        <Message color='red'>Įvyko klaida, užsakymas neišsiųstas</Message>
+      )}
     </Form>
   );
 };

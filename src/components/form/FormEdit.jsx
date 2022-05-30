@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import Form from './Form';
 import Button from '../button/Button';
 import Input from '../input/Input';
+import Message from '../message/Message';
 
 const FormEdit = () => {
   const token = localStorage.getItem('token');
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [fieldsToEdit, setFieldsToEdit] = useState({
     name: '',
     quantity_in_stock: '',
@@ -23,10 +26,10 @@ const FormEdit = () => {
       quantity_kg: fieldsToEdit.quantity_kg,
       description: fieldsToEdit.description,
     };
-    console.log('body', JSON.stringify(body));
     return body;
   }
   async function FetchPatch() {
+    setError(false);
     const body = createObjForFetch();
     const resp = await fetch(
       'https://jellyfish-app-xdnzk.ondigitalocean.app/products/edit',
@@ -39,11 +42,19 @@ const FormEdit = () => {
         body: JSON.stringify(body),
       }
     );
+    console.log(JSON.stringify(body));
     const data = await resp.json();
-    console.log('dataispatchfetch', data);
+    console.log(data);
+    if (data === false) {
+      setError(true);
+    } else {
+      setSuccess(true);
+    }
   }
   function onSubmit() {
+    setSuccess(false);
     FetchPatch();
+    setSuccess(true);
   }
 
   return (
@@ -103,6 +114,8 @@ const FormEdit = () => {
           setFieldsToEdit({ ...fieldsToEdit, description })
         }
       />
+      {success && <Message color='green'>Jūsų prekė buvo patalpinta</Message>}
+      {error && <Message color='red'>Įvyko klaida, duomenys neįrašyti</Message>}
       <div style={{ marginTop: '1rem' }}>
         <Button type='submit'>Atnaujinti duomenis</Button>
       </div>

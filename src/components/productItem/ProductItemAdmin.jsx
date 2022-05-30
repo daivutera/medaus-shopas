@@ -37,8 +37,6 @@ const ProductItemAdmin = ({ img, name, quantity, price, id }) => {
     Navigate(`/edit/${id}`);
   }
   async function deleteItemFromDb(id) {
-    const itemToDelete = { product_id: id };
-
     const res = await fetch(
       `https://jellyfish-app-xdnzk.ondigitalocean.app/products/delete`,
       {

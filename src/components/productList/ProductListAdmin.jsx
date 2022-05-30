@@ -5,7 +5,6 @@ import ProductItemAdmin from '../productItem/ProductItemAdmin';
 import { v4 as uuid } from 'uuid';
 
 const ProductListAdmin = ({ arr }) => {
-  console.log(arr, 'arr');
   return (
     <Container>
       {!arr.length && <div>No any items in e-store</div>}

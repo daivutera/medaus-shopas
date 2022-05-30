@@ -1,7 +1,7 @@
 import './App.css';
 import ContainerBackg from './components/containers/ContainerBackg';
 import Header from './components/header/Header';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Footer from './components/footer/Footer';
 import ProductPage from './pages/ProductPage';
@@ -57,9 +57,7 @@ function App() {
     setIsLoggedIn(false);
   }
   async function login() {
-    console.log('nustatau, kad prisijunges');
     setIsLoggedIn(true);
-    console.log(isLoggedIn);
   }
   const currentAuthContextValue = { isLoggedIn, logout, login };
   return (

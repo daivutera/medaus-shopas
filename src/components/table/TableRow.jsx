@@ -42,7 +42,6 @@ const TableRow = ({
         {cartArr.length ? (
           <Button
             onClick={() => {
-              console.log('id', id);
               editCartArrAndCartQuantity(id);
             }}>
             X

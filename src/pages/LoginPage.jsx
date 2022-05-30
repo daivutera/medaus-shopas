@@ -47,7 +47,6 @@ const LoginPage = () => {
       });
 
       const dataJson = await data.json();
-      console.log(dataJson);
       if (dataJson.success === false) {
         setErrorFromDb(true);
       } else {

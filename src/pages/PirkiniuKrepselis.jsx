@@ -16,13 +16,11 @@ const PirkiniuKrepselis = () => {
   const orderedProducts = cartContext.cartArray;
 
   useEffect(() => {
-    console.log('pasikeite ordered');
     getDataFromContextCreateTable();
   }, [orderedProducts]);
 
   function getDataFromContextCreateTable() {
     const list = orderedProducts.map((cartItem) => cartItem);
-    console.log('list is pirkiniu krepselio', list);
     if (!list) {
       return;
     }
@@ -37,10 +35,9 @@ const PirkiniuKrepselis = () => {
   function CheckifValidToFinishPurchase() {
     setMessage(false);
     if (cartContext.numberInCart > 0) {
-      const cartArrlength = cartContext.cartArray.length;
+      const cartQuantity = cartContext.numberInCart;
       cartContext.editCartArrayRemove([]);
-      cartContext.setNumberInCartMinus(cartArrlength);
-      console.log('suveike CheckifValidToFinishPurchase');
+      cartContext.setNumberInCartMinus(cartQuantity);
     } else {
       setMessage(true);
     }

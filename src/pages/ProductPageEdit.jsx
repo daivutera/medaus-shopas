@@ -53,11 +53,7 @@ const ProductPageEdit = () => {
             />
           </div>
           <div style={{ width: '35rem' }}>
-            <FormEdit
-              onSubmit={() => {
-                console.log('fetchint reiks');
-              }}
-            />
+            <FormEdit />
           </div>
         </div>
       </>

@@ -34,8 +34,6 @@ const Table = ({ arr }) => {
       </tbody>
     );
   }
-
-  console.log('arr', arr);
   const totalCartAmount = arr.reduce(
     (prevVal, currVal) =>
       prevVal + currVal.product_price * currVal.product_quantity,
@@ -43,7 +41,6 @@ const Table = ({ arr }) => {
   );
   const cartContext = useContext(CartContext);
   cartContext.setTotalSumCartFunc(totalCartAmount);
-  console.log('totalCartAmount', totalCartAmount);
   return (
     <S.Table>
       <thead>

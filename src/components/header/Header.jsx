@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +7,10 @@ import Button from '../button/Button';
 import * as S from './Header.style';
 
 const Header = () => {
-  const Navigate = useNavigate();
   const cartContext = useContext(CartContext);
+
+  const Navigate = useNavigate();
+
   return (
     <S.Flex>
       <S.Img src='medutis.png' alt='' />

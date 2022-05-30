@@ -7,17 +7,13 @@ const ProductPage = () => {
   const { id } = useParams();
   const [data, setData] = useState();
   const getData = async () => {
-    console.log('product page fetch');
-    console.log('id product page', id);
     const res = await fetch(
       `https://jellyfish-app-xdnzk.ondigitalocean.app/products`
     );
     const data = await res.json();
-    console.log('data', data);
     const productWithId = data.data.filter(
       (product) => product.product_id == id
     );
-    console.log('productWithId', productWithId);
     return productWithId;
   };
 

@@ -67,7 +67,6 @@ const ProductCard = ({ img, name, quantity_kg, price, description, id }) => {
                 cartInfo.setNumberInCartPlus(temporaryCart);
                 if (temporaryCart > 0) {
                   cartInfo.editCartArray(cartArrAfterAddToCartClick);
-                  console.log('cartarr', cartInfo.cartArray);
                   setTemporaryCart(0);
                   setMessage(true);
                 }
@@ -96,8 +95,6 @@ const ProductCard = ({ img, name, quantity_kg, price, description, id }) => {
                 cartInfo.setNumberInCartPlus(temporaryCart);
                 if (temporaryCart > 0) {
                   cartInfo.editCartArray(cartArrAfterAddToCartClick);
-                  console.log('cartarr', cartInfo.cartArray);
-                  console.log('pirkti');
                   setTemporaryCart(0);
                   Navigate('/pirkti');
                 }
