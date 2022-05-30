@@ -1,7 +1,7 @@
 import './App.css';
 import ContainerBackg from './components/containers/ContainerBackg';
 import Header from './components/header/Header';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Footer from './components/footer/Footer';
 import ProductPage from './pages/ProductPage';
@@ -15,21 +15,18 @@ import ProductPageEdit from './pages/ProductPageEdit';
 import AddPage from './pages/AddPage';
 import Uzsakymai from './pages/Uzsakymai';
 import LoginPage from './pages/LoginPage';
+import AuthContext from './context/AuthContext';
+import ProtectedRoute from './components/PrivateRoute';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [cartArray, setCartArray] = useState([]);
   const [numberInCart, setNumberInCart] = useState(0);
   const [totalSumCart, setTotalSumCart] = useState(0);
-  const [inputs, setInputs] = useState({});
-  const [editInputs, setEditInputs] = useState({});
-  const [addInputs, setAddInputs] = useState({});
-  const [error, setError] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const currentContextValue = {
     cartArray,
-    inputs,
-    editInputs,
-    addInputs,
-    error,
     numberInCart,
     totalSumCart,
     editCartArray,
@@ -37,16 +34,9 @@ function App() {
     setNumberInCartPlus,
     setNumberInCartMinus,
     setTotalSumCartFunc,
-    setInputsFunc,
-    setEditInputsFunc,
-    setAddInputsFunc,
-    setErrorFunc,
   };
   function editCartArray(arr) {
     setCartArray(cartArray.concat(arr));
-  }
-  function setErrorFunc(bool) {
-    setError(bool);
   }
   function editCartArrayRemove(arr) {
     setCartArray(arr);
@@ -62,41 +52,69 @@ function App() {
       setNumberInCart(numberInCart - number);
     }
   }
-  function setInputsFunc(obj) {
-    setInputs(obj);
+  function logout() {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
   }
-  function setEditInputsFunc(obj) {
-    setEditInputs(obj);
+  async function login() {
+    console.log('nustatau, kad prisijunges');
+    setIsLoggedIn(true);
+    console.log(isLoggedIn);
   }
-  function setAddInputsFunc(obj) {
-    setAddInputs(obj);
-  }
+  const currentAuthContextValue = { isLoggedIn, logout, login };
   return (
     <CartContext.Provider value={currentContextValue}>
-      <div className='App'>
-        <ContainerBackg>
-          <Header />
-          <Routes>
-            <Route path='/' exact element={<HomePage />} />
-            <Route path='/product/:id' element={<ProductPage />} />
-            <Route path='/apiemus' element={<ApieMus />} />
-            <Route path='/kontaktai' element={<Kontaktai />} />
-            <Route path='/pirkti' element={<PirkiniuKrepselis />} />
-            <Route path='/login' element={<LoginPage />} />
+      <AuthContext.Provider value={currentAuthContextValue}>
+        <div className='App'>
+          <ContainerBackg>
+            <Header />
+            <Routes>
+              <Route path='/' exact element={<HomePage />} />
+              <Route path='/product/:id' element={<ProductPage />} />
+              <Route path='/apiemus' element={<ApieMus />} />
+              <Route path='/kontaktai' element={<Kontaktai />} />
+              <Route path='/pirkti' element={<PirkiniuKrepselis />} />
+              <Route path='/login' element={<LoginPage />} />
+              {/* <Route path='/admin' element={<AdminPage />} /> */}
 
-            <Route path='/admin' element={<AdminPage />} />
-            <Route path='/edit/:id' element={<ProductPageEdit />} />
-            <Route path='/add' element={<AddPage />} />
-            <Route path='/uzsakymai' element={<Uzsakymai />} />
-            {/* <Route element={<ProtectedRoute path='/control' element={<ControlPage />} />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/login' element={<Login />} />
-         
-        <Route path='*' element={<NotFound />} /> */}
-          </Routes>
-        </ContainerBackg>
-        <Footer />
-      </div>
+              <Route
+                path='/admin'
+                element={
+                  <ProtectedRoute>
+                    <AdminPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/edit/:id'
+                element={
+                  <ProtectedRoute>
+                    <ProductPageEdit />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/add'
+                element={
+                  <ProtectedRoute>
+                    <AddPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/uzsakymai'
+                element={
+                  <ProtectedRoute>
+                    <Uzsakymai />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </ContainerBackg>
+          <Footer />
+        </div>
+      </AuthContext.Provider>
     </CartContext.Provider>
   );
 }

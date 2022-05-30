@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import Form from './Form';
 import Button from '../button/Button';
 import Input from '../input/Input';
+import Message from './../message/Message';
 
 const FormAdd = () => {
+  const token = localStorage.getItem('token');
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [fieldsToAdd, setFieldsToAdd] = useState({
     name: '',
     quantity_in_stock: '',
@@ -16,29 +20,46 @@ const FormAdd = () => {
   function createObjForFetch() {
     const body = {
       name: fieldsToAdd.name,
-      quantity_in_stock: fieldsToAdd.quantity_in_stock,
       price: fieldsToAdd.price,
+      quantity_in_stock: fieldsToAdd.quantity_in_stock,
       foto_url: fieldsToAdd.foto_url,
       quantity_kg: fieldsToAdd.quantity_kg,
       description: fieldsToAdd.description,
     };
-    console.log('body', JSON.stringify(body));
     return body;
   }
   async function fetchAdd() {
+    setError(false);
     const body = createObjForFetch();
-    const resp = await fetch('url', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
+    const resp = await fetch(
+      'https://jellyfish-app-xdnzk.ondigitalocean.app/products/add',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      }
+    );
     const data = await resp.json();
+    if (data === false) {
+      setError(true);
+    }
     console.log('dataispatchfetch', data);
+    setFieldsToAdd({
+      name: '',
+      quantity_in_stock: '',
+      price: '',
+      foto_url: '',
+      quantity_kg: '',
+      description: '',
+    });
   }
   function onSubmit() {
+    setSuccess(false);
     fetchAdd();
+    setSuccess(true);
   }
 
   return (
@@ -101,6 +122,8 @@ const FormAdd = () => {
       <div style={{ marginTop: '1rem' }}>
         <Button type='submit'>Pateikti duomenis</Button>
       </div>
+      {success && <Message color='green'>Jūsų prekė buvo patalpinta</Message>}
+      {error && <Message color='red'>Įvyko klaida, duomenys neįrašyti</Message>}
     </Form>
   );
 };

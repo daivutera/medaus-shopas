@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
 import Button from '../button/Button';
 import * as S from './HeaderAdmin.style';
 
 const HeaderAdmin = () => {
   const Navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
 
   return (
     <S.Flex>
@@ -30,6 +32,7 @@ const HeaderAdmin = () => {
         <Button
           onClick={() => {
             Navigate('/login');
+            authCtx.logout();
           }}>
           Atsijungti
         </Button>

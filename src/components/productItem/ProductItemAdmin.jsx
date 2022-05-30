@@ -7,6 +7,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const ProductItemAdmin = ({ img, name, quantity, price, id }) => {
+  const token = localStorage.getItem('token');
   const Navigate = useNavigate();
 
   function onClickDelete(e) {
@@ -44,6 +45,7 @@ const ProductItemAdmin = ({ img, name, quantity, price, id }) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ product_id: id }),
       }

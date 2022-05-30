@@ -98,6 +98,35 @@ const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
       console.log('dataAfterClientDatafETCH', dataClient);
     }
   }
+  async function sendOrderFetch() {
+    orderedProducts.forEach(async (product) => {
+      console.log('forEachproduct', product);
+      const totalAmount = product.product_price * product.product_quantity;
+      const sendTo = `${userDetails.adresas} ${userDetails.miestas}`;
+      const body = {
+        juridinis: juridinis,
+        amount: product.product_quantity,
+        amount_total_EUR: totalAmount,
+        product_id: product.product_id,
+        product_name: product.product_name,
+        send_to: sendTo,
+        email: userDetails.email,
+      };
+      console.log('orderbody============', JSON.stringify(body));
+      const resp = await fetch(
+        'https://jellyfish-app-xdnzk.ondigitalocean.app/control/orders',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      );
+      const data = await resp.json();
+      console.log('dataAfterOrderfETCH', data);
+    });
+  }
 
   return (
     <Form
@@ -109,6 +138,7 @@ const FormJuridinisFizinis = ({ onSubmit, type, juridinis }) => {
       onSubmit={(e) => {
         e.preventDefault();
         FetchClientData();
+        sendOrderFetch();
         onSubmit();
       }}>
       {type === 'fizinis' && (

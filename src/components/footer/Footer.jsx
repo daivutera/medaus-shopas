@@ -10,7 +10,7 @@ const Footer = () => {
       Copyright Ⓒ Visos teisės saugomos. {new Date().getFullYear()}{' '}
       <S.Span
         onClick={() => {
-          Navigate('/admin');
+          Navigate('/login');
         }}>
         Prisijungti
       </S.Span>

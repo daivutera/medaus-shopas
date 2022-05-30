@@ -4,6 +4,7 @@ import Button from '../button/Button';
 import Input from '../input/Input';
 
 const FormEdit = () => {
+  const token = localStorage.getItem('token');
   const [fieldsToEdit, setFieldsToEdit] = useState({
     name: '',
     quantity_in_stock: '',
@@ -27,13 +28,17 @@ const FormEdit = () => {
   }
   async function FetchPatch() {
     const body = createObjForFetch();
-    const resp = await fetch('url', {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
+    const resp = await fetch(
+      'https://jellyfish-app-xdnzk.ondigitalocean.app/products/edit',
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      }
+    );
     const data = await resp.json();
     console.log('dataispatchfetch', data);
   }

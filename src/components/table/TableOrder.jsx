@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as S from './Table.style';
-import TableRow from './TableRow';
+import TableRowOrder from './TableRowOrder';
 import { v4 as uuid } from 'uuid';
-import CartContext from '../../context/CartContext';
-import { useContext } from 'react';
 
-const Table = ({ arr }) => {
+const TableOrder = ({ arr }) => {
   function getnerateDataFromArr() {
     return (
       <tbody>
         {!arr.length && (
-          <TableRow
+          <TableRowOrder
             id={''}
             juridinis={''}
             amount={'Užsakymų nėra'}
@@ -24,7 +22,7 @@ const Table = ({ arr }) => {
           />
         )}
         {arr.map((oneItem) => (
-          <TableRow
+          <TableRowOrder
             key={uuid()}
             id={oneItem.id}
             juridinis={oneItem.juridinis}
@@ -41,26 +39,19 @@ const Table = ({ arr }) => {
     );
   }
 
-  console.log('arr', arr);
-  const totalCartAmount = arr.reduce(
-    (prevVal, currVal) =>
-      prevVal + currVal.product_price * currVal.product_quantity,
-    0
-  );
-  const cartContext = useContext(CartContext);
-  cartContext.setTotalSumCartFunc(totalCartAmount);
-  console.log('totalCartAmount', totalCartAmount);
   return (
     <S.Table>
       <thead>
         <tr>
-          <S.Th>Prekės id</S.Th>
-          <S.Th>Pavadinimas</S.Th>
-          <S.Th>Pakuotės dydis, kg</S.Th>
-          <S.Th>Užsakomas kiekis, vnt</S.Th>
-          <S.Th>Kaina už vnt, EUR (su PVM)</S.Th>
+          <S.Th>Užsakymo id</S.Th>
+          <S.Th>Ar juridinis asmuo</S.Th>
+          <S.Th>Prekės kaina</S.Th>
+          <S.Th>Užsakymo suma, EUR</S.Th>
           <S.Th>Užsakymo laikas</S.Th>
-          <S.Th>Trinti</S.Th>
+          <S.Th>Prekės id</S.Th>
+          <S.Th>Prekės pavadinimas</S.Th>
+          <S.Th>Kur Siųsti</S.Th>
+          <S.Th>El. paštas</S.Th>
         </tr>
       </thead>
       {getnerateDataFromArr()}
@@ -71,16 +62,19 @@ const Table = ({ arr }) => {
           <S.Td></S.Td>
           <S.Td></S.Td>
           <S.Td></S.Td>
-          <S.Tf>Bendra suma</S.Tf>
-          <S.TfTotal>€{totalCartAmount}</S.TfTotal>
+          <S.Td></S.Td>
+          <S.Td></S.Td>
+          <S.Td></S.Td>
+          <S.Td></S.Td>
+          <S.Td></S.Td>
         </tr>
       </tfoot>
     </S.Table>
   );
 };
 
-Table.propTypes = {
+TableOrder.propTypes = {
   arr: PropTypes.array.isRequired,
 };
 
-export default Table;
+export default TableOrder;
