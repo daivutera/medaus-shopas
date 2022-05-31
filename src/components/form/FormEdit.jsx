@@ -47,9 +47,7 @@ const FormEdit = () => {
         body: JSON.stringify(body),
       }
     );
-    console.log(JSON.stringify(body));
     const data = await resp.json();
-    console.log(data);
     if (data === false) {
       setError(true);
     } else {

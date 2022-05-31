@@ -24,3 +24,18 @@
 "styled-components": "^5.3.5",
 "uuidv4": "^6.2.13",
 "web-vitals": "^2.1.4"
+
+### devDependencies:
+
+"@storybook/addon-actions": "^6.5.6",
+"@storybook/addon-essentials": "^6.5.6",
+"@storybook/addon-interactions": "^6.5.6",
+"@storybook/addon-links": "^6.5.6",
+"@storybook/builder-webpack5": "^6.5.6",
+"@storybook/manager-webpack5": "^6.5.6",
+"@storybook/node-logger": "^6.5.6",
+"@storybook/preset-create-react-app": "^4.1.1",
+"@storybook/react": "^6.5.6",
+"@storybook/testing-library": "^0.0.11",
+"babel-plugin-named-exports-order": "^0.0.2",
+"webpack": "^5.72.1"
