@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from './Button';
 
-export const ButtonStories = () => {
+export const ButtonStor = () => {
   return (
     <Button type='button' color='primary'>
       Login
